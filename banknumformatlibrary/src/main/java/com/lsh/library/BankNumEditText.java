@@ -2,7 +2,6 @@ package com.lsh.library;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
@@ -11,12 +10,9 @@ import android.widget.EditText;
  * on 27/2/2017 10:18
  * 邮箱：www.adonis_lsh.com
  */
-
-/**
- * 1,先判断有没有数字,有的话,就格式化数字
- * 2,判断文本的长度,长度大于规定的数值才进行查询
- */
 public class BankNumEditText extends EditText {
+    ///1,先判断有没有数字,有的话,就格式化数字
+    //2,判断文本的长度,长度大于规定的数值才进行查询
     private final Context mContext;
     private BankNameListener mBankNameListener;
 
@@ -47,11 +43,12 @@ public class BankNumEditText extends EditText {
 
     @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
-        Log.e("111111111", text.toString() + "," + start + "," + lengthBefore + "," + lengthAfter);
         //如果长度大于4位的话,我才去格式化
         String inputString = text.toString();
         if (inputString.length() > 4) {
-            //最多只能输入21位
+            /**
+             * 最多只能输入21位
+             */
             if (inputString.length() < 21 + 5) {
                 boolean ismatch = inputString.matches("^(\\d{4,}\\s){1,5}(\\d{1,4}){1}$");
                 //如果符合规定的正则表达式的话,就不去格式化文本
@@ -114,6 +111,8 @@ public class BankNumEditText extends EditText {
      * 2、把所有数字相加,得到总和。
      * 3、如果信用卡号码是合法的，总和可以被10整除。
      * 网上有很多算法都是错的,请认真看算法
+     * @param cardId 银行卡号
+     * @return 返回真,说明是银行卡号
      */
     public boolean getBankCardCheckCode(String cardId) {
         int sum = 0;
