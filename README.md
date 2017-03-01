@@ -6,20 +6,21 @@
 2. 也可以使用novoda库加入如下的代码:
 
 
-   ```task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-	}
-	task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-	}
-	task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-	}
-	artifacts {
-    archives javadocJar
-    archives sourcesJar
-	}
-   ```
+```java
+		    task sourcesJar(type: Jar) {
+                from android.sourceSets.main.java.srcDirs
+                classifier = 'sources'
+            }
+            task javadoc(type: Javadoc) {
+                source = android.sourceSets.main.java.srcDirs
+                classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+            }
+            task javadocJar(type: Jar, dependsOn: javadoc) {
+                classifier = 'javadoc'
+                from javadoc.destinationDir
+            }
+            artifacts {
+                archives javadocJar
+                archives sourcesJar
+            }
+```
