@@ -4,7 +4,9 @@
 ###解决办法:
 1. 用Bintray和jCenter库,不过要自己去maven上面创建一个包,期间还会遇到一些问题,不要用Android Stdio下面的命令框去提交问题,我们用windows的很窗口就可以解决一些问题.
 2. 也可以使用novoda库加入如下的代码:
-	```task sourcesJar(type: Jar) {
+
+
+   ```task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 	}
@@ -20,4 +22,4 @@
     archives javadocJar
     archives sourcesJar
 	}
-```
+   ```
