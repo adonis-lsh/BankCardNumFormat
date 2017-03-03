@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:text="输入银行卡号:" />
 
-        <com.lsh.bankcard.BankNumEditText
+        <com.lsh.library.BankNumEditText
             android:id="@+id/bankCardNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
