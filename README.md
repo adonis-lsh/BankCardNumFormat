@@ -1,5 +1,5 @@
 # 一个可以自动格式化银行卡号并且自动识别那个银行的EditText
-先上图
+### 先上图
 ![](http://i.imgur.com/YxoEW4y.gif)
 ## 使用方法
 
