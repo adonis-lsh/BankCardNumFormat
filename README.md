@@ -17,6 +17,7 @@
 
 * FAILCODE :没有查询到是那一个银行
 * CARDNUMERROR : 银行卡校验不正确
+* LENGTHNOTENOUGH : 银行卡号码小于六位
 
 
 ```
@@ -40,7 +41,7 @@ BankNumEditText bankNumEditText = (BankNumEditText) findViewById(R.id.bankCardNu
 
 
 ```java
-		 compile 'com.lsh.bankcardnum:banknumformatlibrary:1.0.1'
+		 compile 'com.lsh.bankcardnum:banknumformatlibrary:1.0.2'
 ```
 ## 提交到maven仓库遇到的坑
 - 第一次用了比较简单的novoda库,看着很简单,但是遇到了不怎么怎么解决的坑![](http://i.imgur.com/le91CIw.png)
