@@ -36,10 +36,9 @@ BankNumEditText bankNumEditText = (BankNumEditText) findViewById(R.id.bankCardNu
                 });
 ```
 
-jcenter库 1.0.1估计过几天会审核通过
 
 ```java
-		 compile 'com.lsh.bankcardnum:banknumformatlibrary:1.0.0'
+		 compile 'com.lsh.bankcardnum:banknumformatlibrary:1.0.1'
 ```
 ## 提交到maven仓库遇到的坑
 - 第一次用了比较简单的novoda库,看着很简单,但是遇到了不怎么怎么解决的坑![](http://i.imgur.com/le91CIw.png)
