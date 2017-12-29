@@ -9,7 +9,9 @@
 
 
 <img src="http://opgkgu3ek.bkt.clouddn.com/17-12-29/22684831.jpg" width="400px">
+
 ## 使用方法
+
 在原来的基础上加上了setFullVerify(boolean isFullVerify),不设置的话默认是银行卡输入全了,验证银行卡号正确再去获取所属银行,设置为false以后,再输入银行卡前6位的时候就会去判断是哪个银行,银行卡输入全以后会再去判断时候是银行卡号的正确格式,然后再返回是那一个银行.
 错误码说明:
 
