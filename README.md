@@ -1,8 +1,38 @@
 # 一个可以自动格式化银行卡号并且自动识别那个银行的EditText
 ### 先上图
+这个是全部验证银行卡号以后的展示图
 ![](http://i.imgur.com/YxoEW4y.gif)
-## 使用方法
 
+这是设置不全验证以后的展示图
+![](http://opgkgu3ek.bkt.clouddn.com/17-12-29/22684831.jpg)
+## 使用方法
+在原来的基础上加上了setFullVerify(boolean isFullVerify),不设置的话默认是银行卡输入全了,验证银行卡号正确再去获取所属银行,设置为false以后,再输入银行卡前6位的时候就会去判断是哪个银行,银行卡输入全以后会再去判断时候是银行卡号的正确格式,然后再返回是那一个银行.
+错误码说明:
+
+* FAILCODE :没有查询到是那一个银行
+* CARDNUMERROR : 银行卡校验不正确
+
+
+```
+BankNumEditText bankNumEditText = (BankNumEditText) findViewById(R.id.bankCardNum);
+        final EditText editText = (EditText) findViewById(R.id.bankName);
+
+        bankNumEditText
+                .setFullVerify(false)
+                .setBankNameListener(new BankNumEditText.BankNameListener() {
+                    @Override
+                    public void success(String name) {
+                        editText.setText(name);
+                    }
+
+                    @Override
+                    public void failure(int failCode, String failmsg) {
+                        editText.setText(failCode+failmsg);
+                    }
+                });
+```
+
+jcenter库 1.0.1估计过几天会审核通过
 
 ```java
 		 compile 'com.lsh.bankcardnum:banknumformatlibrary:1.0.0'
@@ -34,3 +64,7 @@
                 archives sourcesJar
             }
 ```
+
+
+
+

@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BankCardNumFormat.iml" filepath="$PROJECT_DIR$/BankCardNumFormat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BankCardNumFormat.iml" filepath="$PROJECT_DIR$/BankCardNumFormat.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banknumformatlibrary/banknumformatlibrary.iml" filepath="$PROJECT_DIR$/banknumformatlibrary/banknumformatlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/banknumformatlibrary/banknumformatlibrary.iml" filepath="$PROJECT_DIR$/banknumformatlibrary/banknumformatlibrary.iml" />
     </modules>
   </component>
