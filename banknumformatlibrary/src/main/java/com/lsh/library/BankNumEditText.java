@@ -1,6 +1,7 @@
 package com.lsh.library;
 
 import android.content.Context;
+import android.text.InputFilter;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.inputmethod.EditorInfo;
@@ -17,6 +18,7 @@ public class BankNumEditText extends EditText {
     private final Context mContext;
     private BankNameListener mBankNameListener;
     private boolean isFullVerify = true;
+    public final static int MAXLENGTH = 26;
 
     public BankNumEditText(Context context) {
         this(context, null);
@@ -44,6 +46,11 @@ public class BankNumEditText extends EditText {
     }
 
     @Override
+    public void setFilters(InputFilter[] filters) {
+        super.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAXLENGTH)});
+    }
+
+    @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         //如果长度大于4位的话,我才去格式化
         String inputString = text.toString();
@@ -57,24 +64,30 @@ public class BankNumEditText extends EditText {
                 if (!ismatch) {
                     formatCardNum(text);
                 }
-                if (isFullVerify) {
-                    if (getBankNum().length() >= 16) {
-                        fullVerifyRead();
+                if (getBankNum().length() < 6) {
+                    if (mBankNameListener != null) {
+                        mBankNameListener.failure(ResultCode.LENGTHNOTENOUGH,getContext().getString(R.string.lengthNotEnough));
                     }
                 } else {
-                    int numLength = getBankNum().length();
-                    if (numLength >= 6 && numLength < 16) {
-                        char[] ss = getBankNum().substring(0, 6).toCharArray();
-                        readBankInfo(ss);
-                    } else if (numLength>=16){
-                        fullVerifyRead();
+                    if (isFullVerify) {
+                        if (getBankNum().length() >= 16) {
+                            fullVerifyRead();
+                        }
+                    } else {
+                        int numLength = getBankNum().length();
+                        if (numLength >= 6 && numLength < 16) {
+                            char[] ss = getBankNum().substring(0, 6).toCharArray();
+                            readBankInfo(ss);
+                        } else if (numLength >= 16) {
+                            fullVerifyRead();
+                        }
                     }
                 }
 
-
-            } else {
-                //超过之后就不能输入
-                setFocusable(false);
+            }
+        } else {
+            if (mBankNameListener != null) {
+                mBankNameListener.failure(ResultCode.LENGTHNOTENOUGH,getContext().getString(R.string.lengthNotEnough));
             }
         }
 
@@ -87,7 +100,9 @@ public class BankNumEditText extends EditText {
             readBankInfo(ss);
 
         } else {
-            mBankNameListener.failure(ResultCode.CARDNUMERROR,getContext().getString(R.string.bankNumverifyError));
+            if (mBankNameListener != null) {
+                mBankNameListener.failure(ResultCode.CARDNUMERROR,getContext().getString(R.string.bankNumverifyError));
+            }
         }
     }
 
@@ -100,7 +115,9 @@ public class BankNumEditText extends EditText {
                 mBankNameListener.success(nameOfBank);
             }
         } else {
-            mBankNameListener.failure(ResultCode.FAILCODE,getContext().getString(R.string.noBankInfo));
+            if (mBankNameListener != null) {
+                mBankNameListener.failure(ResultCode.FAILCODE,getContext().getString(R.string.noBankInfo));
+            }
         }
     }
 
