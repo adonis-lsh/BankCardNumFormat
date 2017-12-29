@@ -2,6 +2,7 @@ package com.lsh.library;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
@@ -15,6 +16,7 @@ public class BankNumEditText extends EditText {
     //2,判断文本的长度,长度大于规定的数值才进行查询
     private final Context mContext;
     private BankNameListener mBankNameListener;
+    private boolean isFullVerify = true;
 
     public BankNumEditText(Context context) {
         this(context, null);
@@ -54,26 +56,52 @@ public class BankNumEditText extends EditText {
                 //如果符合规定的正则表达式的话,就不去格式化文本
                 if (!ismatch) {
                     formatCardNum(text);
-                } else {
+                }
+                if (isFullVerify) {
                     if (getBankNum().length() >= 16) {
-                        //如果是已经格式化好的,就对银行卡号进行验证,如果是银行卡号就去匹配
-                        if (isBankCard()) {
-                            char[] ss = getBankNum().toCharArray();
-                            String nameOfBank = BankInfo.getNameOfBank(mContext, ss);
-                            if (mBankNameListener != null) {
-                                mBankNameListener.success(nameOfBank);
-                            }
-                        } else {
-                            mBankNameListener.failure();
-                        }
+                        fullVerifyRead();
+                    }
+                } else {
+                    int numLength = getBankNum().length();
+                    if (numLength >= 6 && numLength < 16) {
+                        char[] ss = getBankNum().substring(0, 6).toCharArray();
+                        readBankInfo(ss);
+                    } else if (numLength>=16){
+                        fullVerifyRead();
                     }
                 }
+
+
             } else {
                 //超过之后就不能输入
                 setFocusable(false);
             }
         }
 
+    }
+
+    private void fullVerifyRead() {
+        //如果是已经格式化好的,就对银行卡号进行验证,如果是银行卡号就去匹配
+        if (isBankCard()) {
+            char[] ss = getBankNum().toCharArray();
+            readBankInfo(ss);
+
+        } else {
+            mBankNameListener.failure(ResultCode.CARDNUMERROR,getContext().getString(R.string.bankNumverifyError));
+        }
+    }
+
+    //读取银行卡信息
+    private void readBankInfo(char[] ss) {
+        SparseArray<String> bankInfo = BankInfo.getNameOfBank(mContext, ss);
+        String nameOfBank = bankInfo.get(ResultCode.RESULTKEY);
+        if (nameOfBank != null) {
+            if (mBankNameListener != null) {
+                mBankNameListener.success(nameOfBank);
+            }
+        } else {
+            mBankNameListener.failure(ResultCode.FAILCODE,getContext().getString(R.string.noBankInfo));
+        }
     }
 
     private void formatCardNum(CharSequence text) {
@@ -140,9 +168,14 @@ public class BankNumEditText extends EditText {
         mBankNameListener = bankNameListener;
     }
 
+    public BankNumEditText setFullVerify(boolean isFullVerify) {
+        this.isFullVerify = isFullVerify;
+        return this;
+    }
+
     public interface BankNameListener {
         void success(String name);
 
-        void failure();
+        void failure(int failCode, String failmsg);
     }
 }

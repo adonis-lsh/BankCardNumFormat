@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Library</string>
+    <string name="noBankInfo">没有获取到该银行卡信息</string>
+    <string name="bankNumverifyError">银行卡号校验不正确</string>
 </resources>

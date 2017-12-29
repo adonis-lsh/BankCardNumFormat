@@ -1,6 +1,7 @@
 package com.lsh.library;
 
 import android.content.Context;
+import android.util.SparseArray;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -55,17 +56,19 @@ public class BankInfo {
     }
 
     //通过输入的卡号获得银行卡信息
-    public static String getNameOfBank(Context context, char[] charBin) {
+    public static SparseArray<String> getNameOfBank(Context context, char[] charBin) {
         long longBin = 0;
-
+        SparseArray<String> bankInfo = new SparseArray<String>();
         for (int i = 0; i < 6; i++) {
             longBin = (longBin * 10) + (charBin[i] - 48);
         }
         int index = binarySearch(getBinNum(context), longBin);
         if (index == -1) {
-            return "没有获取到该银行卡信息:";
+            bankInfo.put(ResultCode.RESULTKEY,null);
+            return bankInfo;
         }
-        return getBinName(context).get(index);
+        bankInfo.put(ResultCode.RESULTKEY, getBinName(context).get(index));
+        return bankInfo;
     }
 
     //数量有上千条，利用二分查找算法来进行快速查找法

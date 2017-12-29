@@ -20,16 +20,18 @@ public class MainActivity extends AppCompatActivity {
         BankNumEditText bankNumEditText = (BankNumEditText) findViewById(R.id.bankCardNum);
         final EditText editText = (EditText) findViewById(R.id.bankName);
 
-        bankNumEditText.setBankNameListener(new BankNumEditText.BankNameListener() {
-            @Override
-            public void success(String name) {
-                editText.setText(name.toString());
-            }
+        bankNumEditText
+                .setFullVerify(false)
+                .setBankNameListener(new BankNumEditText.BankNameListener() {
+                    @Override
+                    public void success(String name) {
+                        editText.setText(name);
+                    }
 
-            @Override
-            public void failure() {
-
-            }
-        });
+                    @Override
+                    public void failure(int failCode, String failmsg) {
+                        editText.setText(failCode+failmsg);
+                    }
+                });
     }
 }
